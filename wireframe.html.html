@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소스랩 자사몰 — 메인페이지 와이어프레임 v1.1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F4F0;
+    --wire: #C8C5BC;
+    --wire-dark: #8C8880;
+    --wire-light: #E2E0DC;
+    --ink: #2A2825;
+    --ink-mid: #6B6860;
+    --ink-light: #9B9890;
+    --red: #C9382E;
+    --red-light: #F5ECEB;
+    --blue: #2C5F8A;
+    --blue-light: #EBF1F7;
+    --yellow: #E8C94A;
+    --yellow-light: #FDFAED;
+    --green: #4A7C59;
+    --green-light: #ECF1EE;
+    --section-a: #EDEBE5;
+    --section-b: #E8E6E0;
+    --section-c: #F0EEE8;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-sans: 'Noto Sans KR', sans-serif;
+    --font-serif: 'Crimson Pro', serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--ink);
+    min-width: 1240px;
+    padding: 32px;
+  }
+
+  /* ── 문서 헤더 ── */
+  .doc-header {
+    max-width: 1200px;
+    margin: 0 auto 32px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+  }
+  .doc-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+  .doc-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .doc-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .doc-info {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .doc-version {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .doc-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    max-width: 800px;
+  }
+
+  /* ── 공통 라벨 ── */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+  .label-red { color: var(--red); background: var(--red-light); padding: 2px 6px; border-radius: 2px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; }
+  .label-blue { color: var(--blue); background: var(--blue-light); padding: 2px 6px; border-radius: 2px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; }
+  .label-yellow { color: #7A6800; background: var(--yellow-light); padding: 2px 6px; border-radius: 2px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; }
+  .label-green { color: var(--green); background: var(--green-light); padding: 2px 6px; border-radius: 2px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border: 1px solid var(--wire);
+    background: #fff;
+    padding: 3px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── 화면 프레임 (브라우저 모형) ── */
+  .frame {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--wire-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .browser-bar {
+    background: var(--wire-light);
+    border-bottom: 1px solid var(--wire);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .browser-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .browser-dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--wire);
+  }
+  .browser-url {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--wire);
+    border-radius: 3px;
+    padding: 4px 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+  }
+
+  /* ── 섹션 공통 ── */
+  .section {
+    border-bottom: 1px dashed var(--wire);
+    padding: 0;
+    position: relative;
+  }
+  .section:last-of-type { border-bottom: none; }
+  .sec-inner { padding: 32px 40px; }
+
+  /* ── 섹션 0: 공지바 ── */
+  .sec-0 {
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .sec-0 .left, .sec-0 .right { display: flex; gap: 18px; }
+  .sec-0 .center { font-weight: 500; letter-spacing: 0.04em; }
+
+  /* ── 섹션 1: GNB ── */
+  .sec-1 {
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .logo-mock {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .logo-mock span {
+    color: var(--ink-light);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    margin-left: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .gnb-menu {
+    display: flex;
+    gap: 28px;
+    flex: 1;
+  }
+  .gnb-menu a {
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+  }
+  .gnb-menu a.hot::after {
+    content: 'NEW';
+    position: absolute;
+    top: -10px;
+    right: -28px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.08em;
+  }
+  .gnb-utils {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .gnb-utils span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+  }
+  .cart-mock {
+    background: var(--ink);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── 섹션 2: Hero ── */
+  .sec-2 {
+    background: var(--section-a);
+    padding: 0;
+  }
+  .hero-wrap {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    height: 480px;
+  }
+  .hero-main {
+    background: linear-gradient(135deg, #E8E0D0 0%, #D4CCB8 100%);
+    position: relative;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-main::before {
+    content: 'PLACEHOLDER · 1920×480';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mid);
+    letter-spacing: 0.08em;
+  }
+  .hero-tagline {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: #fff;
+    padding: 14px 28px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+  .hero-thumbs {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--wire);
+  }
+  .hero-thumb {
+    flex: 1;
+    border-bottom: 1px solid var(--wire);
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    background: #fff;
+  }
+  .hero-thumb.active {
+    background: var(--ink);
+    color: #fff;
+  }
+  .hero-thumb:last-child { border-bottom: none; }
+  .hero-thumb-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+  .hero-thumb-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .hero-thumb-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  /* ── 섹션 3: Quick Category ── */
+  .sec-3 {
+    background: #fff;
+    padding: 36px 40px;
+    border-bottom: 1px solid var(--wire);
+  }
+  .qc-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 22px;
+  }
+  .qc-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .qc-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 14px;
+  }
+  .qc-item {
+    aspect-ratio: 1 / 1.1;
+    border: 1px solid var(--wire);
+    border-radius: 4px;
+    background: #FAF9F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 8px;
+    cursor: pointer;
+    position: relative;
+  }
+  .qc-item.featured {
+    background: var(--red-light);
+    border-color: var(--red);
+  }
+  .qc-item.featured::before {
+    content: 'PICK';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .qc-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px dashed var(--wire-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-light);
+  }
+  .qc-label {
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  /* ── 섹션 4: Trust Strip ── */
+  .sec-4 {
+    background: var(--ink);
+    color: #fff;
+    padding: 28px 40px;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 12px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .trust-item:last-child { border-right: none; }
+  .trust-icon {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    flex-shrink: 0;
+  }
+  .trust-text-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .trust-text-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── 섹션 5: 상품 그리드 ── */
+  .sec-5 {
+    background: #fff;
+    padding: 50px 40px;
+  }
+  .prod-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  .prod-title {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .prod-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .prod-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--wire);
+    padding-bottom: 0;
+  }
+  .prod-tab {
+    padding: 12px 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    cursor: pointer;
+    position: relative;
+  }
+  .prod-tab.active {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .prod-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink);
+  }
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+  }
+  .prod-card {
+    border: 1px solid var(--wire-light);
+    background: #fff;
+  }
+  .prod-img {
+    aspect-ratio: 1 / 1;
+    background: var(--section-a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-light);
+    position: relative;
+  }
+  .prod-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .prod-info {
+    padding: 14px 12px;
+  }
+  .prod-brand {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .prod-name {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    height: 36px;
+    overflow: hidden;
+  }
+  .prod-price {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .prod-price s {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  /* ── 섹션 6: 기획전 ── */
+  .sec-6 {
+    background: var(--section-c);
+    padding: 50px 40px;
+  }
+  .promo-head {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .promo-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    height: 380px;
+  }
+  .promo-main {
+    background: linear-gradient(135deg, #2A2825 0%, #4A4540 100%);
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .promo-main::before {
+    content: 'PLACEHOLDER · 800×380';
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+  }
+  .promo-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+  .promo-title {
+    font-family: var(--font-serif);
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .promo-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+  }
+  .promo-side {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 18px;
+  }
+  .promo-sub {
+    background: #fff;
+    border: 1px solid var(--wire);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .promo-sub::before {
+    content: 'PLACEHOLDER · 380×180';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-light);
+  }
+  .promo-sub-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .promo-sub-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .promo-sub-desc {
+    font-size: 12px;
+    color: var(--ink-mid);
+  }
+
+  /* ── 섹션 7: 스토리 카드 ── */
+  .sec-7 {
+    background: #fff;
+    padding: 60px 40px;
+  }
+  .story-head {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .story-title {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .story-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .story-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .story-card {
+    border: 1px solid var(--wire);
+    background: #FAF9F5;
+    padding: 32px 26px;
+    display: flex;
+    flex-direction: column;
+    height: 340px;
+  }
+  .story-card-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+  }
+  .story-card-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .story-card-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+  .story-card-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .story-card-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border-top: 1px solid var(--wire);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+
+  /* ── 섹션 8: 리뷰 ── */
+  .sec-8 {
+    background: var(--section-b);
+    padding: 50px 40px;
+  }
+  .review-head {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .review-card {
+    background: #fff;
+    border: 1px solid var(--wire-light);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .review-stars {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+  }
+  .review-text {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .review-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-light);
+    border-top: 1px dashed var(--wire);
+    padding-top: 10px;
+  }
+
+  /* ── 섹션 9: Footer ── */
+  .sec-9 {
+    background: var(--ink);
+    color: #fff;
+    padding: 40px 40px 28px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .footer-brand-name {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .footer-brand-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .footer-cs {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+  .footer-cs strong {
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .footer-col-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    line-height: 2;
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-coop-tag {
+    background: rgba(255,255,255,0.1);
+    padding: 4px 10px;
+    border-radius: 2px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── 어노테이션 영역 ── */
+  .annotations {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    background: #fff;
+    border: 1px solid var(--wire-dark);
+    padding: 32px 36px;
+  }
+  .anno-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .anno-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mid);
+    margin-bottom: 24px;
+    letter-spacing: 0.08em;
+  }
+  .anno-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .anno-item {
+    border-left: 3px solid var(--red);
+    padding: 12px 18px;
+    background: var(--section-a);
+  }
+  .anno-item.blue { border-left-color: var(--blue); }
+  .anno-item.green { border-left-color: var(--green); }
+  .anno-item.yellow { border-left-color: var(--yellow); }
+  .anno-section {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .anno-text {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .anno-method {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-right: 6px;
+    letter-spacing: 0.06em;
+  }
+  .method-widget {
+    background: var(--blue-light);
+    color: var(--blue);
+  }
+  .method-html {
+    background: var(--red-light);
+    color: var(--red);
+  }
+  .method-hybrid {
+    background: var(--yellow-light);
+    color: #7A6800;
+  }
+
+  /* ── 변경 사항 박스 ── */
+  .changelog {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    background: var(--yellow-light);
+    border: 1px solid var(--yellow);
+    padding: 20px 28px;
+  }
+  .changelog-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #7A6800;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .changelog-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 24px;
+  }
+  .changelog-list li {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+  .changelog-list li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .changelog-list li.changed::before {
+    content: '~';
+    color: var(--blue);
+  }
+</style>
+</head>
+<body>
+
+<!-- ────── 문서 헤더 ────── -->
+<div class="doc-header">
+  <div class="doc-meta">
+    <h1 class="doc-title">소스랩 자사몰 — <em>메인페이지 와이어프레임</em></h1>
+    <div class="doc-info">
+      <div><span class="doc-version">v1.1</span></div>
+      <div>2026.05.03</div>
+      <div>Cafe24 / 1200px 기준</div>
+    </div>
+  </div>
+  <p class="doc-desc">협동조합 직거래 + 워커 코옵 정체성을 메인 진입 동선에 명확히 노출. ZAFERA 사프란 브랜드, 제갈량 꾸러미 시리즈, 협동조합 창립 스토리를 추가 반영.</p>
+</div>
+
+<!-- ────── 변경 사항 ────── -->
+<div class="changelog">
+  <div class="changelog-title">v1.0 → v1.1 변경 사항</div>
+  <ul class="changelog-list">
+    <li>Hero 슬라이드 2번 → ZAFERA 사프란 브랜드 정식 노출</li>
+    <li>Quick Category 7번 칸 → "ZAFERA 사프란" 별도 분리</li>
+    <li>스토리 카드 2개 → 3개로 확장 (협동조합 / ZAFERA / 우리는 누구인가)</li>
+    <li>GNB 메뉴에 "협동조합 이야기" 별도 노출</li>
+    <li class="changed">기획전 우측 서브 배너 ZAFERA 입고 알림으로 교체</li>
+    <li class="changed">상품 그리드 BEST 고정 1·2 → 제갈량 꾸러미 시리즈</li>
+    <li>Cafe24 구현 방식을 위젯 / HTML / 하이브리드 3종으로 명시</li>
+    <li>모바일 분기점 어노테이션 보강</li>
+  </ul>
+</div>
+
+<!-- ────── 화면 ────── -->
+<div class="frame">
+
+  <div class="browser-bar">
+    <div class="browser-dots"><span></span><span></span><span></span></div>
+    <div class="browser-url">https://www.saucelab.co.kr · 소스랩 SAUCE LAB</div>
+  </div>
+
+  <!-- ── 섹션 0: Top Notice ── -->
+  <div class="section">
+    <div class="sec-0">
+      <div class="left">
+        <span>📦 30,000원 이상 무료배송</span>
+        <span>⚡ 평일 14시 이전 주문 당일 출고</span>
+      </div>
+      <div class="center">협동조합 창립기념 신규회원 5,000원 쿠폰</div>
+      <div class="right">
+        <span>로그인</span>
+        <span>회원가입</span>
+        <span>고객센터</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 섹션 1: GNB ── -->
+  <div class="section">
+    <div class="sec-1">
+      <div class="logo-mock">SauceLab<span>소스랩</span></div>
+      <nav class="gnb-menu">
+        <a href="#">전체상품</a>
+        <a href="#">베스트</a>
+        <a href="#">신상품</a>
+        <a href="#">기획전</a>
+        <a href="#" class="hot">ZAFERA</a>
+        <a href="#">협동조합 이야기</a>
+        <a href="#">B2B 단체구매</a>
+      </nav>
+      <div class="gnb-utils">
+        <span>🔍 검색</span>
+        <span>마이</span>
+        <div class="cart-mock">CART · 0</div>
+      </div>
+    </div>
+    <div class="sec-inner" style="padding: 12px 40px; border-bottom: 1px dashed var(--wire);">
+      <span class="section-tag">SECTION 01 — Global Navigation</span>
+      <span class="note">Cafe24 기본 헤더 + 메가메뉴 / 로고는 SVG 권장 / "ZAFERA"는 별도 브랜드 페이지로 라우팅</span>
+    </div>
+  </div>
+
+  <!-- ── 섹션 2: Hero ── -->
+  <div class="section">
+    <div class="hero-wrap">
+      <div class="hero-main">
+        <div class="hero-tagline">SAUCELAB × ICHEON LOGISTICS</div>
+        <h2 class="hero-title">하청에서<br>시작한 <em>유통</em></h2>
+        <p class="hero-sub">물류 현장에서 매일 다루던 제품을, 우리가 직접 고르고 직접 배송합니다. 플랫폼 수수료 없는 협동조합 직거래.</p>
+        <a href="#" class="hero-cta">협동조합 이야기 →</a>
+      </div>
+      <div class="hero-thumbs">
+        <div class="hero-thumb">
+          <div class="hero-thumb-num">01 / 03</div>
+          <div class="hero-thumb-title">하청에서 시작한 유통</div>
+          <div class="hero-thumb-meta">BRAND STORY</div>
+        </div>
+        <div class="hero-thumb active">
+          <div class="hero-thumb-num">02 / 03</div>
+          <div class="hero-thumb-title">ZAFERA — 모로코 사프란 정식 입고</div>
+          <div class="hero-thumb-meta">NEW · 2026.05</div>
+        </div>
+        <div class="hero-thumb">
+          <div class="hero-thumb-num">03 / 03</div>
+          <div class="hero-thumb-title">제갈량 꾸러미 — 혼밥 세계여행 키트</div>
+          <div class="hero-thumb-meta">BEST SELLER</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-inner" style="padding: 12px 40px;">
+      <span class="section-tag">SECTION 02 — Hero Slider</span>
+      <span class="note">Cafe24 메인롤링배너 위젯 (자동 슬라이드) + 우측 썸네일 탭은 JS 커스텀 / 480px 고정 / 모바일 280px + 썸네일 숨김</span>
+    </div>
+  </div>
+
+  <!-- ── 섹션 3: Quick Category ── -->
+  <div class="section">
+    <div class="sec-3">
+      <div class="qc-head">
+        <h3 class="qc-title">카테고리 한눈에</h3>
+        <span class="label">Quick Access</span>
+      </div>
+      <div class="qc-grid">
+        <div class="qc-item featured">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">상황별 키트</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">샘표 직배</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">볶음·구이</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">국물·찌개</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">마리네이드</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">이탈리안·양식</div>
+        </div>
+        <div class="qc-item featured">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">ZAFERA 사프란</div>
+        </div>
+        <div class="qc-item">
+          <div class="qc-icon">ICON</div>
+          <div class="qc-label">B2B 단체구매</div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-inner" style="padding: 12px 40px; background: #fff;">
+      <span class="section-tag">SECTION 03 — Quick Category</span>
+      <span class="note">Cafe24 아이콘카테고리 위젯 / 80×80px SVG 아이콘 8종 제작 필요 / "상황별 키트"·"ZAFERA"는 강조색</span>
+    </div>
+  </div>
+
+  <!-- ── 섹션 4: Trust Strip ── -->
+  <div class="section">
+    <div class="sec-4">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon">01</div>
+          <div>
+            <div class="trust-text-title">샘표 공식 파트너</div>
+            <div class="trust-text-sub">DIRECT FROM SEMPIO</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">02</div>
+          <div>
+            <div class="trust-text-title">평일 14시 이전 당일 출고</div>
+            <div class="trust-text-sub">SAME-DAY DISPATCH</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">03</div>
+          <div>
+            <div class="trust-text-title">협동조합 직거래</div>
+            <div class="trust-text-sub">NO PLATFORM FEE</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">04</div>
+          <div>
+            <div class="trust-text-title">나라장터·학교장터 납품</div>
+            <div class="trust-text-sub">PUBLIC PROCUREMENT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-inner" style="padding: 12px 40px;">
+      <span class="section-tag">SECTION 04 — Trust Feature Strip</span>
+      <span class="note">Cafe24 위젯 미지원 → HTML 고급편집으로 직접 구성 / 검정 배경으로 시선 분리 / 4번 항목은 B2B 클릭 유도</span>
+    </div>
+  </div>
+
+  <!-- ── 섹션 5: 상품 그리드 ── -->
+  <div class="section">
+    <div class="sec-5">
+      <div class="prod-head">
+        <h3 class="prod-title">지금 가장 잘 나가는</h3>
+        <span class="prod-sub">Best · New · Special</span>
+      </div>
+      <div class="prod-tabs">
+        <div class="prod-tab active">베스트</div>
+        <div class="prod-tab">신상품</div>
+        <div class="prod-tab">이달의 특가</div>
+        <div class="prod-tab">재구매 TOP</div>
+      </div>
+      <div class="prod-grid">
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge">
+              <span class="label-red">BEST 1</span>
+              <span class="label-yellow">자체기획</span>
+            </div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">제갈량 꾸러미</div>
+            <div class="prod-name">혼밥 세계여행 키트 — 동남아 편</div>
+            <div class="prod-price">29,800원 <s>34,000원</s></div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge">
+              <span class="label-red">BEST 2</span>
+              <span class="label-yellow">자체기획</span>
+            </div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">제갈량 꾸러미</div>
+            <div class="prod-name">혼밥 세계여행 키트 — 모로코 편</div>
+            <div class="prod-price">34,800원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge">
+              <span class="label-blue">NEW</span>
+              <span class="label-green">ZAFERA</span>
+            </div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">ZAFERA</div>
+            <div class="prod-name">모로코 탈리우인 사프란 1g 정식수입</div>
+            <div class="prod-price">39,000원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 3</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">샘표</div>
+            <div class="prod-name">차오차이 마라샹궈 소스 60g</div>
+            <div class="prod-price">3,200원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 4</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">폰타나</div>
+            <div class="prod-name">발사믹 글레이즈 220g</div>
+            <div class="prod-price">9,800원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 5</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">티아시아</div>
+            <div class="prod-name">코코넛밀크 400ml</div>
+            <div class="prod-price">3,500원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 6</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">샘표</div>
+            <div class="prod-name">밸런스죽 단호박 진한죽 285g</div>
+            <div class="prod-price">3,800원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 7</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">순작</div>
+            <div class="prod-name">유기농 양조간장 500ml</div>
+            <div class="prod-price">8,500원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 8</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">샘표</div>
+            <div class="prod-name">티아시아 그린커리 페이스트</div>
+            <div class="prod-price">4,200원</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img">
+            <div class="prod-badge"><span class="label-red">BEST 9</span></div>
+            IMG · 1:1
+          </div>
+          <div class="prod-info">
+            <div class="prod-brand">폰타나</div>
+            <div class="prod-name">엑스트라버진 올리브유 500ml</div>
+            <div class="prod-price">12,800원</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-inner" style="padding: 12px 40px; background: #fff; border-top: 1px dashed var(--wire);">
+      <span class="section-tag">SECTION 05 — Product Grid</span>
+      <span class="note">Cafe24 상품진열 탭 위젯 / 5열 × 2행 = 10개 노출 / BEST 1~2는 진열관리에서 강제고정 / 1024px↓ 4열 분기</span>
+    </div>
+  </div>
+
+  <!-- ── 섹션 6: 기획전 ── -->
+  <div class="section">
+    <div class="sec-6">
+      <div class="promo-head">
+        <span class="section-tag">SECTION 06 — Featured Promotions</span>
+        <h3 class="prod-title" style="margin-top: 8px;">이달의 기획전</h3>
+      </div>
+      <div class="promo-grid">
+        <div class="promo-main">
+          <div class="promo-tag">SAUCELAB ORIGINAL</div>
+          <h2 class="promo-title">제갈량 꾸러미<br>— 혼밥 세계여행 시즌 1</h2>
+          <p class="promo-desc">동남아 · 이탈리아 · 모로코 — 한 박스로 떠나는 3개국 미식 여행</p>
+        </div>
+        <div class="promo-side">
+          <div class="promo-sub">
+            <div>
+              <div class="promo-sub-tag">NEW IN STOCK</div>
+              <h4 class="promo-sub-title">ZAFERA 사프란<br>정식 수입 시작</h4>
+              <p class="promo-sub-desc">모로코 탈리우인 카테고리 1 / 한국 독점 LOA 보유</p>
+            </div>
+          </div>
+          <div class="promo-sub">
+            <div>
+              <div class="promo-sub-tag">FOUNDING SALE</div>
+              <h4 class="promo-sub-title">협동조합 창립<br>창립멤버 특가</h4>
+              <p class="promo-sub-desc">선착순 100명 한정 · 회원가입 5천원 쿠폰</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 섹션 7: 스토리 카드 ── -->
+  <div class="section">
+    <div class="sec-7">
+      <div class="story-head">
+        <h3 class="story-title">소스랩이 <em>왜</em> 다른가</h3>
+        <span class="story-sub">Three Stories Behind</span>
+      </div>
+      <div class="story-grid">
+        <div class="story-card">
+          <div class="story-card-num">01</div>
+          <h4 class="story-card-title">물류 현장에서<br>시작한 <em>워커 코옵</em></h4>
+          <p class="story-card-text">샘표 통합물류센터에서 매일 제품을 다뤄온 우리가, 직접 고르고 직접 파는 협동조합. 소비자는 더 싸게, 노동자는 더 정당하게.</p>
+          <a href="#" class="story-card-link">협동조합 이야기 →</a>
+        </div>
+        <div class="story-card">
+          <div class="story-card-num">02</div>
+          <h4 class="story-card-title">모로코 산지에서 직수입한 <em>ZAFERA</em></h4>
+          <p class="story-card-text">탈리우인 카테고리 1, AZAY SARL 직거래. 한국 독점 LOA 보유. 중간 유통 없이 산지에서 식탁까지 — 진짜 사프란의 시작.</p>
+          <a href="#" class="story-card-link">ZAFERA 브랜드 →</a>
+        </div>
+        <div class="story-card">
+          <div class="story-card-num">03</div>
+          <h4 class="story-card-title">플랫폼에 종속되지 않는 <em>유통 구조</em></h4>
+          <p class="story-card-text">노동자는 임금 종속에서, 판매자는 플랫폼 종속에서, 제조사는 가격 경쟁 종속에서. 세 가지 종속을 동시에 끊어내는 구조.</p>
+          <a href="#" class="story-card-link">탈종속 선언 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 섹션 8: 리뷰 ── -->
+  <div class="section">
+    <div class="sec-8">
+      <div class="review-head">
+        <span class="section-tag">SECTION 08 — Customer Reviews</span>
+        <h3 class="prod-title" style="margin-top: 8px;">먼저 써본 분들의 이야기</h3>
+      </div>
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"혼밥 키트 받았는데 정말 한 박스로 3개국 여행하는 기분이에요. 레시피 카드까지 들어있어서 좋았어요."</p>
+          <div class="review-meta">제갈량 꾸러미 · 김OO 님 · 2026.05</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"사프란 향이 정말 진해요. 그동안 마트에서 산 거랑은 차원이 달라요. 적은 양으로도 충분."</p>
+          <div class="review-meta">ZAFERA 사프란 · 이OO 님 · 2026.05</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"샘표 제품 자주 사는데 여기는 평일 주문 당일 출고가 진짜네요. 다음날 도착했어요."</p>
+          <div class="review-meta">차오차이 마라샹궈 · 박OO 님 · 2026.04</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"협동조합이라는 게 뭔지 처음 알았어요. 좋은 가게가 살아남았으면 해서 자주 사려고요."</p>
+          <div class="review-meta">발사믹 글레이즈 · 최OO 님 · 2026.04</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 섹션 9: Footer ── -->
+  <div class="section">
+    <div class="sec-9">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">SauceLab</div>
+          <p class="footer-brand-desc">물류 현장 노동자가 직접 만드는<br>탈종속 유통 협동조합</p>
+          <div class="footer-cs">
+            <strong>1670-XXXX</strong>
+            평일 10:00 – 17:00 · 점심 12:30 – 13:30<br>
+            토·일·공휴일 휴무
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">SHOP</div>
+          <a href="#">전체상품</a>
+          <a href="#">베스트</a>
+          <a href="#">신상품</a>
+          <a href="#">기획전</a>
+          <a href="#">ZAFERA</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">ABOUT</div>
+          <a href="#">협동조합 이야기</a>
+          <a href="#">정관·운영규정</a>
+          <a href="#">조합원 모집</a>
+          <a href="#">B2B 단체구매</a>
+          <a href="#">나라장터 납품</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">CS</div>
+          <a href="#">공지사항</a>
+          <a href="#">자주 묻는 질문</a>
+          <a href="#">1:1 문의</a>
+          <a href="#">배송조회</a>
+          <a href="#">교환·반품</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 SauceLab Cooperative · All Rights Reserved · Powered by Cafe24</div>
+        <div class="footer-coop-tag">협동조합기본법 제85조 등록 법인</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.frame -->
+
+<!-- ────── 어노테이션 ────── -->
+<div class="annotations">
+  <h2 class="anno-title">Cafe24 구현 가이드</h2>
+  <p class="anno-sub">SECTION-BY-SECTION IMPLEMENTATION GUIDE</p>
+
+  <div class="anno-grid">
+
+    <div class="anno-item blue">
+      <div class="anno-section">SECTION 0 · TOP NOTICE</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        Cafe24 공지배너 위젯. 좌우 분리 텍스트는 HTML 약간 수정 필요. 모바일에서는 중앙 메시지만 노출.
+      </div>
+    </div>
+
+    <div class="anno-item blue">
+      <div class="anno-section">SECTION 1 · GNB</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        기본 GNB + 메가메뉴 활용. "ZAFERA" 메뉴는 NEW 뱃지 직접 추가(고급편집). 로고는 SVG 권장.
+      </div>
+    </div>
+
+    <div class="anno-item">
+      <div class="anno-section">SECTION 2 · HERO SLIDER</div>
+      <div class="anno-text">
+        <span class="anno-method method-hybrid">하이브리드</span>
+        메인롤링배너 위젯 + 우측 썸네일 탭은 JS 커스텀(고급편집). 모바일에서는 썸네일 숨김 / 자동 슬라이드만 동작.
+      </div>
+    </div>
+
+    <div class="anno-item blue">
+      <div class="anno-section">SECTION 3 · QUICK CATEGORY</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        아이콘카테고리 위젯. 80×80px SVG 아이콘 8종 제작 필요. "상황별 키트"·"ZAFERA" 강조 처리는 CSS 추가.
+      </div>
+    </div>
+
+    <div class="anno-item">
+      <div class="anno-section">SECTION 4 · TRUST STRIP</div>
+      <div class="anno-text">
+        <span class="anno-method method-html">HTML 직접</span>
+        Cafe24 위젯에 동일 형태 없음. HTML 고급편집으로 직접 구성. 검정 배경으로 시선 분리. B2B 클릭 유도 핵심.
+      </div>
+    </div>
+
+    <div class="anno-item blue">
+      <div class="anno-section">SECTION 5 · PRODUCT GRID</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        상품진열 위젯(탭형). BEST 1·2 강제고정은 진열관리에서 설정. 5열 → 모바일 2열 자동 분기.
+      </div>
+    </div>
+
+    <div class="anno-item">
+      <div class="anno-section">SECTION 6 · PROMOTIONS</div>
+      <div class="anno-text">
+        <span class="anno-method method-hybrid">하이브리드</span>
+        이미지배너 위젯(2-1 분할). 좌측 메인은 텍스트 오버레이로 HTML 약간 수정. 우측 서브 2개는 링크배너.
+      </div>
+    </div>
+
+    <div class="anno-item">
+      <div class="anno-section">SECTION 7 · STORY CARDS</div>
+      <div class="anno-text">
+        <span class="anno-method method-html">HTML 직접</span>
+        3개 카드. 위젯 미지원. 협동조합 신뢰도·ZAFERA 브랜드·탈종속 선언 — 소스랩 정체성 핵심 영역.
+      </div>
+    </div>
+
+    <div class="anno-item green">
+      <div class="anno-section">SECTION 8 · REVIEWS</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        Cafe24 기본 리뷰 위젯 또는 외부 앱(크리마 등) 연동. 4개 노출. 더보기 클릭 시 전체 리뷰 페이지로.
+      </div>
+    </div>
+
+    <div class="anno-item blue">
+      <div class="anno-section">SECTION 9 · FOOTER</div>
+      <div class="anno-text">
+        <span class="anno-method method-widget">위젯</span>
+        Cafe24 기본 Footer. "협동조합기본법 제85조 등록 법인" 뱃지는 HTML 약간 수정. 사업자정보 자동 출력.
+      </div>
+    </div>
+
+    <div class="anno-item yellow">
+      <div class="anno-section">반응형 분기점</div>
+      <div class="anno-text">
+        1200px+ 5열 / 1024px 4열 / 768px 3열 / 모바일 2열. Hero 480→280px. GNB 햄버거 전환. Quick Category는 슬라이드형 변환.
+      </div>
+    </div>
+
+    <div class="anno-item yellow">
+      <div class="anno-section">제작 필요 이미지 목록</div>
+      <div class="anno-text">
+        로고 SVG/PNG · Hero 배너 3종(1920×480) · 썸네일 3종(180×160) · QC 아이콘 8종(80×80) · 기획전 메인(800×380) + 서브 2종(380×180) · 스토리 카드 3종(480×280)
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
