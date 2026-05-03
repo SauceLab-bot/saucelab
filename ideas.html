@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소스랩 아이디어 메모장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1009;
+    --bg2: #161810;
+    --bg3: #1C1E14;
+    --panel: #22241A;
+    --border: rgba(180,160,60,0.12);
+    --border-bright: rgba(180,160,60,0.3);
+    --amber: #C8A020;
+    --amber-bright: #E8C040;
+    --amber-dim: rgba(200,160,32,0.4);
+    --text: #D8D4B8;
+    --text-dim: rgba(216,212,184,0.4);
+    --text-mid: rgba(216,212,184,0.65);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+    --serif: 'Gowun Batang', serif;
+
+    --cat-saucelab: #4A9060;
+    --cat-zafera: #C8A020;
+    --cat-company: #6080C8;
+    --cat-product: #C07040;
+    --cat-etc: #808080;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .tb-logo {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+
+  .tb-count {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* LAYOUT */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 360px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-section {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 2px;
+    text-align: left;
+  }
+
+  .cat-btn:hover { background: rgba(255,255,255,0.04); }
+  .cat-btn.active { background: rgba(255,255,255,0.07); }
+
+  .cat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cat-name {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    flex: 1;
+  }
+
+  .cat-btn.active .cat-name { color: var(--text); }
+
+  .cat-count {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    background: rgba(255,255,255,0.05);
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  /* ADD BUTTON */
+  .add-btn {
+    margin: 16px;
+    background: var(--amber);
+    color: var(--bg);
+    border: none;
+    padding: 12px;
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: background 0.15s;
+  }
+
+  .add-btn:hover { background: var(--amber-bright); }
+
+  /* MEMO LIST */
+  .memo-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .memo-list::-webkit-scrollbar { width: 4px; }
+  .memo-list::-webkit-scrollbar-track { background: transparent; }
+  .memo-list::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+  .memo-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+
+  .memo-card:hover { border-color: var(--border-bright); background: var(--panel); }
+  .memo-card.selected { border-color: var(--amber); background: var(--panel); }
+
+  .memo-card-top {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .memo-cat-tag {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .memo-date {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  .memo-title {
+    font-family: var(--serif);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .memo-preview {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .memo-tags-row {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    margin-top: 8px;
+  }
+
+  .tag-chip {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  /* EDITOR */
+  .editor {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .editor-toolbar {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg2);
+    flex-shrink: 0;
+  }
+
+  .editor-toolbar select {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .editor-toolbar select:focus { border-color: var(--amber); }
+
+  .toolbar-input {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 0.88rem;
+    padding: 6px 12px;
+    outline: none;
+    border-radius: 2px;
+    flex: 1;
+    transition: border-color 0.15s;
+  }
+
+  .toolbar-input:focus { border-color: var(--amber); }
+
+  .tb-tag-input {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    outline: none;
+    border-radius: 2px;
+    width: 160px;
+    transition: border-color 0.15s;
+  }
+
+  .tb-tag-input:focus { border-color: var(--amber); }
+
+  .save-btn {
+    background: var(--amber);
+    color: var(--bg);
+    border: none;
+    padding: 7px 18px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+
+  .save-btn:hover { background: var(--amber-bright); }
+
+  .del-btn {
+    background: transparent;
+    border: 1px solid rgba(200,80,80,0.2);
+    color: rgba(200,80,80,0.5);
+    padding: 7px 12px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .del-btn:hover { border-color: rgba(200,80,80,0.6); color: rgba(200,80,80,0.9); }
+
+  .editor-body {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #noteBody {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    line-height: 2;
+    padding: 28px 28px;
+    letter-spacing: 0.02em;
+  }
+
+  #noteBody::placeholder { color: var(--text-dim); }
+
+  .editor-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    pointer-events: none;
+  }
+
+  .editor-empty-icon { font-size: 2.5rem; opacity: 0.2; }
+
+  .editor-empty-text {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  /* EMPTY STATE */
+  .empty-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 40px 20px;
+    opacity: 0.4;
+    text-align: center;
+  }
+
+  .empty-list-icon { font-size: 2rem; }
+
+  .empty-list-text {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    letter-spacing: 0.05em;
+  }
+
+  /* search */
+  .search-wrap {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    padding: 7px 12px;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.15s;
+  }
+
+  .search-input:focus { border-color: var(--amber); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  /* bottom status */
+  .status-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 8px 24px;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    body { overflow: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-logo">💡 소스랩 아이디어 메모장</div>
+  <div class="tb-count" id="totalCount">메모 0개</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">카테고리</div>
+      <button class="cat-btn active" onclick="filterCat('all')" id="cat-all">
+        <div class="cat-dot" style="background:var(--text-dim)"></div>
+        <span class="cat-name">전체</span>
+        <span class="cat-count" id="cnt-all">0</span>
+      </button>
+      <button class="cat-btn" onclick="filterCat('소스랩')" id="cat-소스랩">
+        <div class="cat-dot" style="background:var(--cat-saucelab)"></div>
+        <span class="cat-name">소스랩</span>
+        <span class="cat-count" id="cnt-소스랩">0</span>
+      </button>
+      <button class="cat-btn" onclick="filterCat('ZAFERA')" id="cat-ZAFERA">
+        <div class="cat-dot" style="background:var(--cat-zafera)"></div>
+        <span class="cat-name">ZAFERA</span>
+        <span class="cat-count" id="cnt-ZAFERA">0</span>
+      </button>
+      <button class="cat-btn" onclick="filterCat('법인명')" id="cat-법인명">
+        <div class="cat-dot" style="background:var(--cat-company)"></div>
+        <span class="cat-name">법인명 후보</span>
+        <span class="cat-count" id="cnt-법인명">0</span>
+      </button>
+      <button class="cat-btn" onclick="filterCat('제품개발')" id="cat-제품개발">
+        <div class="cat-dot" style="background:var(--cat-product)"></div>
+        <span class="cat-name">제품개발</span>
+        <span class="cat-count" id="cnt-제품개발">0</span>
+      </button>
+      <button class="cat-btn" onclick="filterCat('기타')" id="cat-기타">
+        <div class="cat-dot" style="background:var(--cat-etc)"></div>
+        <span class="cat-name">기타</span>
+        <span class="cat-count" id="cnt-기타">0</span>
+      </button>
+    </div>
+    <button class="add-btn" onclick="newNote()">+ 새 메모</button>
+  </div>
+
+  <!-- MEMO LIST -->
+  <div style="display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;background:var(--bg2);">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="🔍  메모 검색..." oninput="renderList()">
+    </div>
+    <div class="memo-list" id="memoList"></div>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="editor">
+    <div class="editor-toolbar">
+      <select id="noteCategory" onchange="updateCatColor()">
+        <option value="소스랩">소스랩</option>
+        <option value="ZAFERA">ZAFERA</option>
+        <option value="법인명">법인명 후보</option>
+        <option value="제품개발">제품개발</option>
+        <option value="기타">기타</option>
+      </select>
+      <input class="toolbar-input" id="noteTitle" placeholder="제목 입력..." maxlength="60">
+      <input class="tb-tag-input" id="noteTags" placeholder="태그: 병디자인, 자사몰" maxlength="80">
+      <button class="save-btn" onclick="saveNote()">저장 ↵</button>
+      <button class="del-btn" onclick="deleteNote()" id="delBtn" style="display:none">🗑</button>
+    </div>
+
+    <div class="editor-body">
+      <textarea id="noteBody" placeholder="아이디어를 자유롭게 적어두세요...
+
+메모는 브라우저에 자동 저장됩니다.
+이 파일을 닫았다 열어도 내용이 남아있어요."></textarea>
+      <div class="editor-empty" id="editorEmpty">
+        <div class="editor-empty-icon">✍️</div>
+        <div class="editor-empty-text">왼쪽에서 메모를 선택하거나<br>+ 새 메모를 눌러 시작하세요</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="status-bar">
+  <span id="statusLeft">로컬 저장 · 브라우저를 닫아도 유지됨</span>
+  <span id="statusRight">마지막 저장: —</span>
+</div>
+
+<script>
+const STORAGE_KEY = 'saucelab_ideas_v1';
+const CAT_COLORS = {
+  '소스랩': 'var(--cat-saucelab)',
+  'ZAFERA': 'var(--cat-zafera)',
+  '법인명': 'var(--cat-company)',
+  '제품개발': 'var(--cat-product)',
+  '기타': 'var(--cat-etc)',
+};
+const CAT_BG = {
+  '소스랩': 'rgba(74,144,96,0.15)',
+  'ZAFERA': 'rgba(200,160,32,0.15)',
+  '법인명': 'rgba(96,128,200,0.15)',
+  '제품개발': 'rgba(192,112,64,0.15)',
+  '기타': 'rgba(128,128,128,0.15)',
+};
+
+let notes = [];
+let currentId = null;
+let filterCategory = 'all';
+
+function load() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  notes = raw ? JSON.parse(raw) : [];
+}
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+}
+
+function fmtDate(ts) {
+  const d = new Date(ts);
+  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+function newNote() {
+  currentId = null;
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteBody').value = '';
+  document.getElementById('noteTags').value = '';
+  document.getElementById('noteCategory').value = filterCategory !== 'all' ? filterCategory : '소스랩';
+  document.getElementById('delBtn').style.display = 'none';
+  document.getElementById('editorEmpty').style.display = 'none';
+  document.getElementById('noteTitle').focus();
+  updateCatColor();
+  renderList();
+}
+
+function saveNote() {
+  const title = document.getElementById('noteTitle').value.trim();
+  const body = document.getElementById('noteBody').value.trim();
+  const cat = document.getElementById('noteCategory').value;
+  const tags = document.getElementById('noteTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+
+  if (!title && !body) return;
+
+  const now = Date.now();
+
+  if (currentId) {
+    const idx = notes.findIndex(n => n.id === currentId);
+    if (idx > -1) {
+      notes[idx] = { ...notes[idx], title, body, cat, tags, updated: now };
+    }
+  } else {
+    const note = { id: genId(), title: title || '(제목 없음)', body, cat, tags, created: now, updated: now };
+    notes.unshift(note);
+    currentId = note.id;
+  }
+
+  save();
+  renderList();
+  document.getElementById('delBtn').style.display = '';
+  document.getElementById('statusRight').textContent = '마지막 저장: ' + fmtDate(now);
+}
+
+function deleteNote() {
+  if (!currentId) return;
+  if (!confirm('이 메모를 삭제할까요?')) return;
+  notes = notes.filter(n => n.id !== currentId);
+  save();
+  currentId = null;
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteBody').value = '';
+  document.getElementById('noteTags').value = '';
+  document.getElementById('delBtn').style.display = 'none';
+  document.getElementById('editorEmpty').style.display = 'flex';
+  renderList();
+}
+
+function selectNote(id) {
+  currentId = id;
+  const note = notes.find(n => n.id === id);
+  if (!note) return;
+  document.getElementById('noteTitle').value = note.title === '(제목 없음)' ? '' : note.title;
+  document.getElementById('noteBody').value = note.body;
+  document.getElementById('noteTags').value = note.tags ? note.tags.join(', ') : '';
+  document.getElementById('noteCategory').value = note.cat;
+  document.getElementById('delBtn').style.display = '';
+  document.getElementById('editorEmpty').style.display = 'none';
+  updateCatColor();
+  renderList();
+}
+
+function filterCat(cat) {
+  filterCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('cat-' + cat);
+  if (btn) btn.classList.add('active');
+  renderList();
+}
+
+function updateCatColor() {
+  const cat = document.getElementById('noteCategory').value;
+  document.getElementById('noteCategory').style.color = CAT_COLORS[cat] || 'var(--text)';
+}
+
+function renderList() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let filtered = notes.filter(n => {
+    const matchCat = filterCategory === 'all' || n.cat === filterCategory;
+    const matchQ = !q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q) || (n.tags||[]).some(t=>t.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  // update counts
+  document.getElementById('cnt-all').textContent = notes.length;
+  ['소스랩','ZAFERA','법인명','제품개발','기타'].forEach(cat => {
+    const el = document.getElementById('cnt-' + cat);
+    if (el) el.textContent = notes.filter(n=>n.cat===cat).length;
+  });
+
+  document.getElementById('totalCount').textContent = `메모 ${notes.length}개`;
+
+  const list = document.getElementById('memoList');
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty-list"><div class="empty-list-icon">🌿</div><div class="empty-list-text">메모가 없어요<br>+ 새 메모를 눌러 시작하세요</div></div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(n => {
+    const color = CAT_COLORS[n.cat] || 'var(--text-dim)';
+    const bg = CAT_BG[n.cat] || 'rgba(128,128,128,0.1)';
+    const tagsHtml = (n.tags||[]).slice(0,3).map(t=>`<span class="tag-chip">#${t}</span>`).join('');
+    return `
+    <div class="memo-card ${n.id===currentId?'selected':''}" onclick="selectNote('${n.id}')">
+      <div class="memo-card-top">
+        <span class="memo-cat-tag" style="color:${color};background:${bg}">${n.cat}</span>
+        <span class="memo-date">${fmtDate(n.updated)}</span>
+      </div>
+      <div class="memo-title">${n.title}</div>
+      <div class="memo-preview">${n.body}</div>
+      ${tagsHtml ? `<div class="memo-tags-row">${tagsHtml}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// Ctrl+S to save
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    saveNote();
+  }
+});
+
+// --- 초기 데이터 삽입 ---
+function seedInitialData() {
+  if (localStorage.getItem(STORAGE_KEY)) return; // 이미 있으면 스킵
+
+  const now = Date.now();
+  const seed = [
+    {
+      id: genId(), cat: 'ZAFERA', title: 'ZAFERA 병 디자인 아이디어',
+      body: `복숭아 버전: 따뜻한 골드/오렌지 계열 라벨
+배 버전: 쿨한 올리브 그린 계열 라벨
+
+공통 요소:
+- 탈리우인 PGI 인증 마크 삽입
+- 사프란 실(thread) 일러스트 라벨 포인트
+- ZAFERA 로고타입 코르모란트 세리프체
+- 수출용 영문 라벨 별도 버전 필요 (Zafera Peach / Zafera Pear)
+
+병 형태: 슬림 에스트레이야 타입 or 와인 쇼울더 타입 검토`,
+      tags: ['병디자인', '라벨', '브랜딩'], created: now, updated: now
+    },
+    {
+      id: genId(), cat: 'ZAFERA', title: '소스랩 자사몰 대문 페이지 기획',
+      body: `Cafe24 기반 메인 페이지 구성 방향
+
+섹션 구성 (안):
+1. 히어로 — ZAFERA 대표 이미지 + 슬로건
+2. 제품 라인업 — 제갈량 꾸러미 / ZAFERA / 수입 원료
+3. 브랜드 스토리 — 소스랩 협동조합 소개
+4. 베스트셀러 위젯
+5. B2B/공공조달 CTA 배너
+
+기술:
+- Cafe24 스마트 디자인 편집
+- 모바일 반응형 필수
+- 상단 GNB: 소스랩 로고 / 제품 / 브랜드 / B2B / 장바구니`,
+      tags: ['자사몰', 'Cafe24', 'UX기획'], created: now - 60000, updated: now - 60000
+    },
+    {
+      id: genId(), cat: '법인명', title: '로드인터내셔널 대체 법인명 후보',
+      body: `현황: '로드인터내셔널'은 폐업 법인 이름 → 새 이름 필요
+
+후보 목록:
+━ 감성/브랜드 방향
+• 자페라컴퍼니 — ZAFERA를 법인명으로 직결
+• 사프라 (SAFRA) — 사프란 아랍어 어원, 짧고 강함
+• 탈리 (TALI) — 탈리우인에서 따온 것, 모던하고 기억하기 쉬움
+• 아틀라스트레이딩 — 모로코 아틀라스 산맥
+
+━ 실용/조달 방향
+• 소스랩인터내셔널 — 소스랩 브랜드 연결성 확실
+• 이음무역 — 한국-모로코를 잇는다는 의미
+• 골든스레드 — 사프란 황금실, 영문 수출 감각
+
+→ 검토 방향: ZAFERA 브랜드와 연결되면서 수출용으로도 쓸 수 있는 영문명 우선`,
+      tags: ['법인설립', '사명', '브랜딩'], created: now - 120000, updated: now - 120000
+    },
+    {
+      id: genId(), cat: '제품개발', title: '복숭아+사프란 발효음료 (Zafera Peach)',
+      body: `국내 브랜드명: 복숭아 사프란 발효음료
+수출명: Zafera Peach
+
+주요 특징:
+- 이천 복숭아 + 탈리우인 사프란 (AZAY SARL 직거래)
+- 자연 발효 / 저당 설계
+- 황금빛 색상 → 시각적 프리미엄
+
+개발 상태: 초기 컨셉
+다음 단계: 시제품 배합 비율 결정 → 소분 테스트`,
+      tags: ['음료', '발효', '사프란', 'ZAFERA'], created: now - 180000, updated: now - 180000
+    },
+    {
+      id: genId(), cat: '제품개발', title: '배+사프란 무설탕 발효음료',
+      body: `컨셉: 무설탕 자연 발효의 진수
+
+이천 배 + 사프란 조합
+- 과일 자체 당분으로만 발효 (무설탕 강조)
+- 청량하고 스파이시한 뉘앙스
+- 프리미엄 건강음료 포지셔닝
+
+상업화 가능성: 복숭아 버전보다 높다고 판단
+이유: 무설탕 시장 성장 + 차별화 포인트 명확
+
+수출명 검토: Zafera Pear`,
+      tags: ['음료', '무설탕', '발효', 'ZAFERA'], created: now - 240000, updated: now - 240000
+    },
+  ];
+
+  notes = seed;
+  save();
+}
+
+// INIT
+load();
+seedInitialData();
+load();
+updateCatColor();
+renderList();
+document.getElementById('editorEmpty').style.display = 'flex';
+</script>
+</body>
+</html>

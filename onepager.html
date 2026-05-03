@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소스랩 협동조합 — 소개</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1E3A2F;
+    --forest-mid: #2C5240;
+    --moss: #4A7060;
+    --sage-light: #8AAF98;
+    --cream: #F5F0E8;
+    --cream-dark: #E8E0D0;
+    --tan: #C8B89A;
+    --amber: #C87E2A;
+    --ink: #141A15;
+    --white: #FDFCF9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: var(--forest);
+    padding: 0 52px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .nav-logo-mark {
+    width: 32px; height: 32px;
+    border: 2px solid var(--sage-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    color: var(--sage-light);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo-text {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.5);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--sage-light); }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 60px;
+    background: var(--forest);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 52px 0;
+  }
+
+  /* topographic line pattern */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(138,175,152,0.06) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(138,175,152,0.04) 60px);
+    pointer-events: none;
+  }
+
+  .hero-body {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: end;
+    padding-bottom: 80px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-left {}
+
+  .hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(138,175,152,0.12);
+    border: 1px solid rgba(138,175,152,0.25);
+    color: var(--sage-light);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+
+  .hero-chip::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--sage-light);
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+  }
+
+  .hero-headline {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.9s 0.4s both;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--sage-light);
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.9;
+    max-width: 500px;
+    animation: fadeUp 0.9s 0.6s both;
+  }
+
+  .hero-actions {
+    margin-top: 40px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.8s both;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: #D98C35; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(245,240,232,0.6);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    padding: 14px 28px;
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--cream); border-color: rgba(245,240,232,0.35); }
+
+  /* hero right — numbers */
+  .hero-right {
+    padding-bottom: 80px;
+    animation: fadeUp 0.9s 0.5s both;
+  }
+
+  .hero-stat-stack {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid rgba(138,175,152,0.15);
+  }
+
+  .hero-stat {
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(138,175,152,0.1);
+    transition: background 0.3s;
+  }
+
+  .hero-stat:last-child { border-bottom: none; }
+  .hero-stat:hover { background: rgba(138,175,152,0.05); }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    color: var(--sage-light);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: rgba(245,240,232,0.4);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* hero bottom strip */
+  .hero-bottom-strip {
+    border-top: 1px solid rgba(138,175,152,0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: relative; z-index: 2;
+  }
+
+  .strip-item {
+    padding: 24px 28px;
+    border-right: 1px solid rgba(138,175,152,0.1);
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .strip-item:last-child { border-right: none; }
+
+  .strip-icon {
+    width: 36px; height: 36px;
+    background: rgba(138,175,152,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .strip-text { font-size: 0.78rem; color: rgba(245,240,232,0.55); line-height: 1.5; }
+  .strip-text strong { color: var(--cream); display: block; font-weight: 500; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy {
+    background: var(--white);
+    padding: 120px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 40%;
+    background: linear-gradient(135deg, transparent 0%, rgba(200,184,154,0.08) 100%);
+    pointer-events: none;
+  }
+
+  .philosophy-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 20px;
+  }
+
+  .philosophy-heading {
+    font-family: 'Gowun Batang', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .philosophy-heading em { font-style: italic; color: var(--moss); }
+
+  .philosophy-tagline {
+    margin-top: 24px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(20,26,21,0.5);
+    line-height: 2;
+  }
+
+  .dependency-list {
+    display: flex; flex-direction: column; gap: 0;
+    border-left: 2px solid var(--cream-dark);
+  }
+
+  .dep-item {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--cream-dark);
+    position: relative;
+    transition: border-left-color 0.3s, padding-left 0.3s;
+  }
+
+  .dep-item:last-child { border-bottom: none; }
+
+  .dep-item::before {
+    content: '';
+    position: absolute;
+    left: -2px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--forest);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+
+  .dep-item:hover::before { transform: scaleY(1); }
+  .dep-item:hover { padding-left: 40px; }
+
+  .dep-who {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .dep-problem {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 8px;
+  }
+
+  .dep-solution {
+    font-size: 0.8rem;
+    color: rgba(20,26,21,0.5);
+    line-height: 1.7;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    background: var(--forest);
+    padding: 120px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roadmap::before {
+    content: 'ROADMAP';
+    position: absolute;
+    right: -20px; bottom: -30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16vw;
+    color: rgba(255,255,255,0.025);
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .roadmap-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative; z-index: 2;
+  }
+
+  .roadmap-header {
+    margin-bottom: 60px;
+  }
+
+  .roadmap-header .section-label { color: var(--sage-light); }
+
+  .roadmap-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .roadmap-title em { font-style: italic; color: var(--sage-light); }
+
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .roadmap-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(138,175,152,0.12);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .roadmap-card:hover {
+    background: rgba(138,175,152,0.07);
+    border-color: rgba(138,175,152,0.3);
+  }
+
+  .roadmap-card::before {
+    content: attr(data-phase);
+    position: absolute;
+    top: -10px; right: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: rgba(138,175,152,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    background: rgba(138,175,152,0.1);
+    border: 1px solid rgba(138,175,152,0.2);
+    color: var(--sage-light);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .roadmap-card:nth-child(2) .phase-badge { background: rgba(200,126,42,0.1); border-color: rgba(200,126,42,0.2); color: var(--amber); }
+  .roadmap-card:nth-child(3) .phase-badge { background: rgba(138,175,152,0.15); border-color: rgba(138,175,152,0.3); color: #A8CFBA; }
+
+  .roadmap-phase-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .roadmap-phase-desc {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.45);
+    line-height: 1.9;
+  }
+
+  .roadmap-phase-tag {
+    margin-top: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--sage-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── STRUCTURE ── */
+  .structure {
+    background: var(--cream-dark);
+    padding: 120px 52px;
+  }
+
+  .structure-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .structure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 56px;
+  }
+
+  .struct-block {
+    background: var(--white);
+    padding: 40px 36px;
+    border-top: 3px solid var(--forest);
+  }
+
+  .struct-icon { font-size: 1.8rem; margin-bottom: 16px; display: block; }
+
+  .struct-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+
+  .struct-body {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(20,26,21,0.6);
+    line-height: 1.9;
+  }
+
+  .struct-detail {
+    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { color: rgba(20,26,21,0.45); }
+  .detail-val { font-weight: 500; color: var(--forest); }
+
+  /* ── EXIT VISION ── */
+  .exit-vision {
+    background: var(--amber);
+    padding: 100px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exit-vision::before {
+    content: '5-7Y';
+    position: absolute;
+    right: -20px; bottom: -20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22vw;
+    color: rgba(255,255,255,0.08);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .exit-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative; z-index: 2;
+  }
+
+  .exit-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+  }
+
+  .exit-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .exit-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .exit-sub {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.9;
+  }
+
+  .exit-right { display: flex; flex-direction: column; gap: 16px; }
+
+  .exit-item {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 20px 24px;
+    display: flex; align-items: flex-start; gap: 14px;
+    transition: background 0.2s;
+  }
+
+  .exit-item:hover { background: rgba(255,255,255,0.18); }
+
+  .exit-item-icon {
+    font-size: 1.2rem; flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .exit-item-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .exit-item-desc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  /* ── CONTACT / CTA ── */
+  .contact {
+    background: var(--ink);
+    padding: 100px 52px;
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .contact-heading {
+    font-family: 'Gowun Batang', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .contact-heading em { font-style: italic; color: var(--sage-light); }
+
+  .contact-sub {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.4);
+    line-height: 1.9;
+  }
+
+  .contact-items {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .contact-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px;
+    border: 1px solid rgba(138,175,152,0.1);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-item:hover {
+    border-color: rgba(138,175,152,0.3);
+    background: rgba(138,175,152,0.04);
+  }
+
+  .ci-icon {
+    width: 40px; height: 40px;
+    background: rgba(138,175,152,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .ci-label { font-size: 0.65rem; color: rgba(245,240,232,0.35); letter-spacing: 0.1em; margin-bottom: 3px; }
+  .ci-value { font-size: 0.88rem; color: var(--cream); font-weight: 400; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 36px 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(138,175,152,0.1);
+  }
+
+  .footer-left {
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .footer-logo-mark {
+    width: 28px; height: 28px;
+    border: 1px solid rgba(138,175,152,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    color: var(--sage-light);
+  }
+
+  .footer-name {
+    font-family: 'Gowun Batang', serif;
+    font-size: 0.9rem;
+    color: var(--cream);
+  }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.25);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 50px 24px 0; }
+    .hero-body { grid-template-columns: 1fr; gap: 40px; }
+    .hero-right { display: none; }
+    .hero-bottom-strip { grid-template-columns: 1fr; }
+    .strip-item { border-right: none; border-bottom: 1px solid rgba(138,175,152,0.1); }
+    .philosophy-inner, .exit-inner, .contact-inner, .structure-grid { grid-template-columns: 1fr; gap: 40px; }
+    .roadmap-grid { grid-template-columns: 1fr; }
+    .philosophy, .roadmap, .structure, .exit-vision, .contact { padding: 80px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">SL</div>
+    <div class="nav-logo-text">소스랩 협동조합</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#philosophy">철학</a></li>
+    <li><a href="#roadmap">로드맵</a></li>
+    <li><a href="#structure">구조</a></li>
+    <li><a href="#vision">비전</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="hero-chip">경기도 이천 · 소비재 유통 협동조합</div>
+      <h1 class="hero-headline">
+        함께 만드는<br>
+        <em>지속 가능한</em><br>
+        유통 구조
+      </h1>
+      <p class="hero-sub">
+        소스랩은 노동자 조합원이 직접 운영하는 소비재 유통 협동조합입니다.
+        샘표식품을 비롯한 국내외 브랜드와 파트너십을 통해
+        누구도 종속되지 않는 새로운 유통 생태계를 만듭니다.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">조합 소개 보기 ↓</button>
+        <button class="btn-ghost">조합 가입 문의</button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-stat-stack">
+        <div class="hero-stat">
+          <div class="stat-num">23명</div>
+          <div class="stat-label">현재 조합원 수 (최대 30명)</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">100,000원</div>
+          <div class="stat-label">출자좌수 1좌 금액</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">5–7년</div>
+          <div class="stat-label">목표 엑싯 타임라인</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">샘표·폰타나</div>
+          <div class="stat-label">주요 파트너 브랜드</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom-strip">
+    <div class="strip-item">
+      <div class="strip-icon">🏭</div>
+      <div class="strip-text">
+        <strong>재고 리스크 Zero</strong>
+        선불위탁 구조로 재고·미수 없이 운영
+      </div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-icon">🏛️</div>
+      <div class="strip-text">
+        <strong>공공조달 채널</strong>
+        나라장터 · S2B 협동조합 우대 계약
+      </div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-icon">🌏</div>
+      <div class="strip-text">
+        <strong>수입 브랜드 확장</strong>
+        모로코 사프란 · 아르간오일 라인업
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-inner">
+    <div>
+      <div class="section-label">Core Philosophy</div>
+      <h2 class="philosophy-heading">
+        세 가지 종속 구조를<br>
+        <em>동시에 해결한다</em>
+      </h2>
+      <p class="philosophy-tagline">
+        소스랩은 노동자·판매자·제조사가 각각 겪는
+        구조적 종속 문제를 하나의 협동조합 모델로 풀어냅니다.
+        누군가의 이익을 위해 누군가를 희생시키지 않습니다.
+      </p>
+    </div>
+
+    <div class="dependency-list">
+      <div class="dep-item">
+        <div class="dep-who">Worker · 노동자</div>
+        <div class="dep-problem">시간 종속에서 해방</div>
+        <div class="dep-solution">조합원이 직접 운영에 참여하고 수익을 배분받습니다. 고용이 아닌 소유의 관점.</div>
+      </div>
+      <div class="dep-item">
+        <div class="dep-who">Seller · 판매자</div>
+        <div class="dep-problem">플랫폼 종속에서 해방</div>
+        <div class="dep-solution">쿠팡 의존도를 단계적으로 줄여가는 탈팡(脫팡) 로드맵. 자체 채널과 공공조달로 다각화.</div>
+      </div>
+      <div class="dep-item">
+        <div class="dep-who">Manufacturer · 제조사</div>
+        <div class="dep-problem">가격경쟁 종속에서 해방</div>
+        <div class="dep-solution">단순 가격 경쟁 대신 차별화 큐레이션·번들로 브랜드 가치를 지킵니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="roadmap-inner">
+    <div class="roadmap-header">
+      <div class="section-label">탈팡(脫팡) 3단계 로드맵</div>
+      <h2 class="roadmap-title">플랫폼 독립을 향한<br><em>단계적 전략</em></h2>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-card" data-phase="1">
+        <div class="phase-badge">Phase 1 · 현재</div>
+        <div class="roadmap-phase-title">독점 번들 구성</div>
+        <div class="roadmap-phase-desc">
+          타 채널에서 구매 불가능한 소스랩 전용 번들 구성.
+          제갈량 꾸러미 등 큐레이션 묶음으로 가격 비교 차단.
+          쿠팡 의존도를 유지하면서도 차별화 시작.
+        </div>
+        <div class="roadmap-phase-tag">→ 제갈량 꾸러미 · 혼밥 세계여행 키트</div>
+      </div>
+
+      <div class="roadmap-card" data-phase="2">
+        <div class="phase-badge">Phase 2 · 확장</div>
+        <div class="roadmap-phase-title">독점 조성 개발</div>
+        <div class="roadmap-phase-desc">
+          소스랩만의 독자 레시피 블렌딩 제품 개발.
+          OEM·PB 형태로 단순 유통을 넘어 제품 기획 주도.
+          나라장터·S2B 공공조달 채널 본격 확대.
+        </div>
+        <div class="roadmap-phase-tag">→ S2B 조달 · 조리고 납품 · 자체 레시피 제품</div>
+      </div>
+
+      <div class="roadmap-card" data-phase="3">
+        <div class="phase-badge">Phase 3 · 엑싯</div>
+        <div class="roadmap-phase-title">PB 브랜드 론칭</div>
+        <div class="roadmap-phase-desc">
+          소스랩 자체 PB 브랜드 출시. 수입 원료(사프란·아르간오일) 활용.
+          샘표식품과의 전략적 파트너십을 인수 가능성으로 발전.
+          조합원 연령 프로파일 기준 5~7년 내 최적 엑싯 윈도우.
+        </div>
+        <div class="roadmap-phase-tag">→ 샘표 인수 검토 · ZAFERA 브랜드 · 모로코 라인</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section class="structure" id="structure">
+  <div class="structure-inner">
+    <div class="section-label">Cooperative Structure</div>
+    <h2 class="philosophy-heading" style="font-family:'Gowun Batang',serif;font-size:2.2rem;font-weight:700;color:var(--forest);line-height:1.4;margin-bottom:0;">
+      협동조합 운영 구조
+    </h2>
+
+    <div class="structure-grid">
+      <div class="struct-block">
+        <span class="struct-icon">📋</span>
+        <div class="struct-title">법인 구조</div>
+        <div class="struct-body">협동조합기본법에 따른 노동자협동조합으로 설립. 조합원이 곧 노동자이며, 의결권과 수익을 함께 갖습니다.</div>
+        <div class="struct-detail">
+          <div class="detail-row"><span class="detail-key">설립 유형</span><span class="detail-val">노동자협동조합</span></div>
+          <div class="detail-row"><span class="detail-key">출자 단위</span><span class="detail-val">1좌 = 100,000원</span></div>
+          <div class="detail-row"><span class="detail-key">1인 출자 한도</span><span class="detail-val">전체의 30% 이하</span></div>
+          <div class="detail-row"><span class="detail-key">소재지</span><span class="detail-val">경기도 이천시</span></div>
+        </div>
+      </div>
+
+      <div class="struct-block">
+        <span class="struct-icon">💼</span>
+        <div class="struct-title">비즈니스 모델</div>
+        <div class="struct-body">선불위탁(재고·미수 Zero) 방식으로 리스크를 최소화합니다. 복수 브랜드 취급으로 협상력을 확보합니다.</div>
+        <div class="struct-detail">
+          <div class="detail-row"><span class="detail-key">위탁 방식</span><span class="detail-val">선불위탁 (재고 Zero)</span></div>
+          <div class="detail-row"><span class="detail-key">주요 채널</span><span class="detail-val">쿠팡·스마트스토어·S2B</span></div>
+          <div class="detail-row"><span class="detail-key">조달 우대</span><span class="detail-val">수의계약 5천만원까지</span></div>
+          <div class="detail-row"><span class="detail-key">수입 확장</span><span class="detail-val">모로코·AZAY SARL</span></div>
+        </div>
+      </div>
+
+      <div class="struct-block">
+        <span class="struct-icon">👥</span>
+        <div class="struct-title">조합원 구성</div>
+        <div class="struct-body">샘표 이천 통합물류센터 실무 경험자 중심. 현장 물류 데이터와 바이어 네트워크가 경쟁 우위의 핵심입니다.</div>
+        <div class="struct-detail">
+          <div class="detail-row"><span class="detail-key">현재 인원</span><span class="detail-val">23명</span></div>
+          <div class="detail-row"><span class="detail-key">최대 한도</span><span class="detail-val">30명 (정관 명시)</span></div>
+          <div class="detail-row"><span class="detail-key">핵심 역량</span><span class="detail-val">샘표 물류 내부 데이터</span></div>
+          <div class="detail-row"><span class="detail-key">준비 중</span><span class="detail-val">공공조달관리사 취득</span></div>
+        </div>
+      </div>
+
+      <div class="struct-block">
+        <span class="struct-icon">📦</span>
+        <div class="struct-title">취급 브랜드</div>
+        <div class="struct-body">샘표 의존도를 낮추기 위해 복수 브랜드를 전략적으로 편성합니다. 독립성이 곧 협상력입니다.</div>
+        <div class="struct-detail">
+          <div class="detail-row"><span class="detail-key">국내 식품</span><span class="detail-val">샘표·폰타나·순작</span></div>
+          <div class="detail-row"><span class="detail-key">수입 식품</span><span class="detail-val">티아시아·차오차이</span></div>
+          <div class="detail-row"><span class="detail-key">자체 PB (예정)</span><span class="detail-val">ZAFERA 사프란 라인</span></div>
+          <div class="detail-row"><span class="detail-key">수입 원료</span><span class="detail-val">모로코 사프란·아르간오일</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXIT VISION -->
+<section class="exit-vision" id="vision">
+  <div class="exit-inner">
+    <div>
+      <div class="exit-label">Long-term Vision · 장기 비전</div>
+      <h2 class="exit-title">5~7년 후,<br><em>샘표와 함께</em><br>새로운 챕터로</h2>
+      <p class="exit-sub">
+        조합원의 연령 프로파일과 시장 성숙도를 고려한 최적 엑싯 윈도우.
+        독립적인 협상력을 먼저 갖춘 후, 전략적 파트너십으로 전환합니다.
+      </p>
+    </div>
+
+    <div class="exit-right">
+      <div class="exit-item">
+        <div class="exit-item-icon">🔒</div>
+        <div>
+          <div class="exit-item-title">독립성이 먼저다</div>
+          <div class="exit-item-desc">샘표 외 브랜드 취급을 통해 진정한 협상 레버리지를 확보합니다. 필요할 때 협력하는 파트너가 됩니다.</div>
+        </div>
+      </div>
+      <div class="exit-item">
+        <div class="exit-item-icon">📈</div>
+        <div>
+          <div class="exit-item-title">브랜드 자산 축적</div>
+          <div class="exit-item-desc">ZAFERA 등 자체 PB 브랜드가 소스랩의 가치를 높입니다. 단순 유통사가 아닌 브랜드 기업으로 포지셔닝.</div>
+        </div>
+      </div>
+      <div class="exit-item">
+        <div class="exit-item-icon">🤝</div>
+        <div>
+          <div class="exit-item-title">전략적 인수 시나리오</div>
+          <div class="exit-item-desc">샘표식품의 유통 채널 다각화 니즈와 소스랩의 공공조달·PB 역량을 결합한 윈윈 구조를 목표합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">
+        소스랩과<br>
+        <em>함께하고 싶다면</em>
+      </h2>
+      <p class="contact-sub">
+        조합원 가입, B2B 파트너십, 공공조달 협력 등<br>
+        다양한 방식으로 소스랩과 연결될 수 있습니다.
+      </p>
+    </div>
+
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-value">경기도 이천시</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🏢</div>
+        <div>
+          <div class="ci-label">Brand</div>
+          <div class="ci-value">소스랩 협동조합 · 로드인터내셔널</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🌐</div>
+        <div>
+          <div class="ci-label">Import Partner</div>
+          <div class="ci-value">AZAY SARL · 모로코 탈리우인</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">📋</div>
+        <div>
+          <div class="ci-label">Procurement</div>
+          <div class="ci-value">나라장터 · S2B 협동조합 우대</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo-mark">SL</div>
+    <div class="footer-name">소스랩 협동조합</div>
+  </div>
+  <div class="footer-copy">© 2025 SAUCELAB COOPERATIVE — All rights reserved</div>
+</footer>
+
+</body>
+</html>

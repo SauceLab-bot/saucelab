@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>소스랩 미식 세계관 그래프 V2 (데이터 확장)</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        body { background-color: #0d1117; color: white; font-family: 'Malgun Gothic', sans-serif; margin: 0; overflow: hidden; }
+        #sourcelab-network { width: 100vw; height: 100vh; border: none; }
+        .controls { position: absolute; top: 20px; left: 20px; z-index: 10; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
+        h1 { margin: 0; font-size: 18px; color: #58a6ff; }
+        p { font-size: 11px; color: #8b949e; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <h1>Source Lab Master Graph</h1>
+        <p>2024 식품소비 트렌드 반영 버전</p>
+    </div>
+    <div id="sourcelab-network"></div>
+
+    <script type="text/javascript">
+        var nodes = new vis.DataSet([
+            {id: 1, label: 'Source Lab', shape: 'circle', color: '#58a6ff', font: {size: 30, color: '#ffffff'}, mass: 5},
+            {id: 2, label: '🥢 미식의 기본', shape: 'dot', color: '#7ee787', size: 20},
+            {id: 3, label: '☀️ 든든 아침', shape: 'dot', color: '#aff5b4', size: 20},
+            {id: 4, label: '🔥 중화 미식', shape: 'dot', color: '#ff7b72', size: 20},
+            {id: 5, label: '🍱 간편 반찬', shape: 'dot', color: '#d2a8ff', size: 20},
+            {id: 21, label: '샘표 진간장\n#미식의기준', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 22, label: '연두\n#순식물성', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 23, label: '진공소면\n#쫄깃함', shape: 'box', color: '#161b22', font: {color: '#8b949e', size: 12}},
+            {id: 31, label: '밸런스죽\n#1인가구_1위', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 32, label: '폰타나 스프\n#홈브런치', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 33, label: '순작 건강차\n#이너뷰티', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 41, label: '차오차이\n#10분_안주', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 42, label: '아르간 오일\n#풍미완성', shape: 'box', color: '#161b22', font: {color: '#8b949e', size: 12}},
+            {id: 51, label: '질러 육포\n#고단백', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 52, label: '우리엄마 캔\n#설거지제로', shape: 'box', color: '#21262d', font: {color: 'white'}},
+            {id: 53, label: '계란\n#단백질', shape: 'box', color: '#161b22', font: {color: '#8b949e', size: 11}}
+        ]);
+        var edges = new vis.DataSet([
+            {from: 1, to: 2}, {from: 1, to: 3}, {from: 1, to: 4}, {from: 1, to: 5},
+            {from: 2, to: 21}, {from: 2, to: 22}, {from: 2, to: 23},
+            {from: 3, to: 31}, {from: 3, to: 32}, {from: 3, to: 33},
+            {from: 4, to: 41}, {from: 4, to: 42},
+            {from: 5, to: 51}, {from: 5, to: 52}, {from: 5, to: 53},
+            {from: 21, to: 23, label: '간장 비빔국수', font: {size: 10, color: '#8b949e'}, dashes: true},
+            {from: 21, to: 53, label: '마약 계란장', font: {size: 10, color: '#8b949e'}, dashes: true},
+            {from: 41, to: 42, label: '풍미 극대화', font: {size: 10, color: '#8b949e'}},
+            {from: 31, to: 33, label: '속 편한 아침', font: {size: 10, color: '#8b949e'}, dashes: true},
+            {from: 51, to: 41, label: '혼술 한상', font: {size: 10, color: '#8b949e'}, dashes: true}
+        ]);
+        var container = document.getElementById('sourcelab-network');
+        var data = { nodes: nodes, edges: edges };
+        var options = {
+            nodes: { borderWidth: 2, shadow: true },
+            edges: { color: '#30363d', width: 2, smooth: { type: 'continuous' } },
+            physics: { barnesHut: { gravitationalConstant: -2000, centralGravity: 0.3, springLength: 150, springConstant: 0.04 } }
+        };
+        var network = new vis.Network(container, data, options);
+    </script>
+</body>
+</html>
