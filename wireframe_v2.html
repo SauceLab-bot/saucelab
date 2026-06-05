@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소스랩 자사몰 대문 와이어프레임 v2 — IA 9섹션 (확정 카피 탑재)</title>
+<meta name="description" content="소스랩은 샘표 물류센터에서 850일째 박스를 직접 옮기고 있는 사람들이 만든 협동조합 직거래 몰입니다. 샘표 정품 569종 중에서 당신의 오늘 저녁에 맞는 것만 골라 한 박스로 보냅니다.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type": "Organization", "name": "소스랩 (SauceLab)", "description": "샘표 물류센터 노동자들이 만든 협동조합 직거래 큐레이션 몰", "url": "https://saucelab-bot.github.io/saucelab/"},
+    {"@type": "WebSite", "name": "소스랩 자사몰", "url": "https://saucelab-bot.github.io/saucelab/"}
+  ]
+}
+</script>
+<style>
+:root{--ink:#2b2520;--paper:#faf7f2;--line:#d8cfc2;--accent:#b5482a;--gold:#c9a227;--dim:#8a7f72;--note:#3a6ea5;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;background:#e9e4dc;color:var(--ink);line-height:1.6;}
+.frame{max-width:1080px;margin:24px auto;background:var(--paper);border:2px solid var(--ink);box-shadow:8px 8px 0 rgba(43,37,32,.15);}
+/* 어노테이션 */
+.anno{background:#eef4fb;border-left:4px solid var(--note);color:var(--note);font-size:12px;padding:6px 12px;}
+.anno b{font-weight:700;}
+.tag{display:inline-block;font-size:10px;background:var(--note);color:#fff;padding:1px 6px;border-radius:2px;margin-right:6px;vertical-align:middle;}
+section{border-bottom:2px dashed var(--line);padding:0;}
+.pad{padding:20px 28px;}
+h1,h2{font-weight:800;letter-spacing:-.02em;}
+.wirebox{background:repeating-linear-gradient(45deg,#efe9e0,#efe9e0 8px,#e7e0d5 8px,#e7e0d5 16px);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:12px;text-align:center;padding:8px;}
+/* GNB */
+.gnb{display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding:14px 28px;}
+.gnb .logo{font-size:20px;font-weight:900;margin-right:auto;}
+.gnb a{font-size:13px;padding:6px 12px;border:1px solid var(--line);text-decoration:none;color:var(--ink);border-radius:3px;}
+.gnb a.soon{color:var(--dim);border-style:dashed;}
+.gnb a.b2b{background:var(--ink);color:#fff;}
+/* AEO 리드 */
+.aeo{background:#fff;border:1.5px solid var(--ink);margin:16px 28px;padding:14px 18px;font-size:14px;}
+.aeo .q{font-weight:800;}
+.aeo .a{color:#4a4138;}
+/* Hero */
+.hero{position:relative;margin:0 28px 16px;}
+.hero .slide{min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;}
+.hero h1{font-size:34px;}
+.hero p{font-size:15px;max-width:560px;}
+.dots{display:flex;gap:6px;padding:10px 0 0;}
+.dots span{width:10px;height:10px;border:1.5px solid var(--ink);border-radius:50%;}
+.dots span.on{background:var(--ink);}
+.heromenu{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--dim);}
+.heromenu div{border:1px dashed var(--line);padding:3px 8px;background:#fff;}
+/* 카드 그리드 */
+.grid{display:grid;gap:14px;margin:14px 28px;}
+.g4{grid-template-columns:repeat(4,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g5{grid-template-columns:repeat(5,1fr);}
+.card{border:1.5px solid var(--ink);background:#fff;display:flex;flex-direction:column;}
+.card .img{height:110px;}
+.card .tx{padding:12px 14px;}
+.card h3{font-size:16px;margin-bottom:4px;}
+.card p{font-size:12.5px;color:#4a4138;}
+.card .line{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.06em;}
+.dreambar{margin:0 28px 14px;border:1.5px dashed var(--dim);padding:10px 16px;font-size:13px;color:var(--dim);background:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+/* 결제 3축 */
+.pay3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:14px 28px;border:1.5px solid var(--ink);}
+.pay3 div{padding:16px;border-right:1.5px solid var(--ink);background:#fff;}
+.pay3 div:last-child{border-right:none;}
+.pay3 b{display:block;font-size:15px;}
+.pay3 span{font-size:12px;color:#4a4138;}
+/* BEST NEW */
+.bn h2{font-size:20px;}
+.bn .sub{font-size:12.5px;color:var(--dim);margin-bottom:8px;}
+.prod{height:150px;}
+/* 메가 타일 */
+.mega .card .tx{padding:10px 12px;}
+.mega h3{font-size:13.5px;}
+.mega p{font-size:11.5px;}
+/* 사전 픽 */
+.dict{border:1.5px solid var(--ink);background:#fff;padding:14px 16px;font-size:13px;}
+.dict .q{font-weight:800;display:block;}
+.dict .a{color:#4a4138;}
+.dict .go{font-size:11.5px;color:var(--accent);font-weight:700;}
+/* 스토리 */
+.story{background:var(--ink);color:#efe9e0;}
+.story .card{background:#3a332c;border-color:#5a5249;color:#efe9e0;}
+.story .card h3{color:var(--gold);font-size:14px;}
+.story .card p{color:#cfc6ba;}
+.story .card.soon{border-style:dashed;opacity:.85;}
+/* 푸터 */
+footer{background:#1f1b17;color:#a99e90;font-size:12px;}
+footer .b2bline{color:#efe9e0;font-size:13px;margin-bottom:10px;}
+footer .b2bline a{color:var(--gold);}
+@media (max-width:760px){
+  .g4,.g3,.g5,.pay3{grid-template-columns:1fr 1fr;}
+  .g5{grid-template-columns:1fr 1fr;}
+  .hero h1{font-size:24px;}
+  .pad{padding:14px 16px;}
+  .grid,.hero,.aeo,.pay3,.dreambar{margin-left:16px;margin-right:16px;}
+}
+</style>
+</head>
+<body>
+<div class="frame">
+
+<div class="anno"><b>소스랩 자사몰 대문 와이어프레임 v2</b> (2026-06-05) — IA 9섹션 · 확정 카피 v1 탑재 (850일 · 자랑 은근 톤 · ZAFERA 소노출). 회색 빗금 = 이미지 자리 (alt 텍스트 명기). 파란 박스 = 구현 어노테이션. 기획 정본: 02-소스랩_자사몰_대문페이지_기획_v2.md</div>
+
+<!-- §1 GNB -->
+<section>
+  <div class="anno"><span class="tag">§1 GNB</span>Cafe24 메뉴 위젯. ZAFERA = Coming Soon 티저 (카테고리 없음, 입고 알림 페이지로 연결)</div>
+  <nav class="gnb" aria-label="주 메뉴">
+    <div class="logo">소스랩</div>
+    <a href="#line">라인 찾기</a><a href="#dict">소스 사전</a><a href="#story">협동조합 이야기</a><a href="#" class="soon">ZAFERA — Coming Soon</a><a href="#" class="b2b">B2B 문의</a>
+  </nav>
+</section>
+
+<!-- §0 AEO 리드 -->
+<section>
+  <div class="anno"><span class="tag">§0 AEO 리드</span>h1 직하 직답 블록 — JSON-LD와 함께 GEO 관문. 검색·AI가 이 두 줄을 인용</div>
+  <div class="aeo">
+    <span class="q">Q. 소스랩은 뭐 하는 곳인가요?</span><br>
+    <span class="a">→ 소스랩은 샘표 물류센터에서 850일째 박스를 직접 옮기고 있는 사람들이 만든 협동조합 직거래 몰입니다. 샘표 정품 569종 중에서, 당신의 오늘 저녁에 맞는 것만 골라 한 박스로 보냅니다.</span>
+  </div>
+</section>
+
+<!-- §2 Hero -->
+<section>
+  <div class="anno"><span class="tag">§2 Hero ×5</span>HTML 섹션. 슬라이드 ①만 표시 — ②~⑤는 하단 미니맵 참조. 전 슬라이드 alt 카피 v1 §2 명기</div>
+  <div class="hero">
+    <div class="slide wirebox" role="img" aria-label="네 가지 식탁 사진이 교차하는 메인 배너 — 혼밥 한 그릇, 가족 식탁, 명절 손님상, 부모님 밥상">
+      <div style="background:rgba(250,247,242,.92);padding:18px 20px;border:1.5px solid var(--ink);max-width:620px;text-align:left;color:var(--ink);">
+        <h1>상품이 아니라, 길을 팝니다</h1>
+        <p>569종에서 헤매지 마세요. 당신이 누구인지 고르면, 식탁까지 가는 길이 열립니다.</p>
+      </div>
+    </div>
+    <div class="dots"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+    <div class="heromenu">
+      <div>② 전화 대신, 식탁을 보내세요 (Line D)</div><div>③ "이 소스 어떻게 써요?" (소스사전)</div><div>④ 소스 한 병이 곧 항공권 (도시 35)</div><div>⑤ 절기는 식탁이 먼저 압니다 (시즌)</div>
+    </div>
+  </div>
+</section>
+
+<!-- §3 4라인 카드 -->
+<section id="line">
+  <div class="anno"><span class="tag">§3 4라인 진입 카드</span>대문의 심장 — 클릭 시 라인 랜딩(축 1 큐레이션 카테고리 직결). 하단 = 큐레이터 3단계 자리 예약</div>
+  <div class="pad" style="padding-bottom:0;"><h2>당신은 누구인가요?</h2></div>
+  <div class="grid g4">
+    <div class="card"><div class="img wirebox" role="img" aria-label="원룸 식탁 위 이국적인 한 그릇과 여권처럼 펼쳐진 레시피 카드">img</div><div class="tx"><span class="line">LINE A · 탐험가의 식탁</span><h3>오늘은 어느 나라로 갈까</h3><p>마라탕, 마살라, 나시고랭 — 혼자라서 더 자유로운 식탁. 한 그릇 여행 키트로 시작하세요.</p></div></div>
+    <div class="card"><div class="img wirebox" role="img" aria-label="냉장고에 정돈된 소스들과 아이 숙제 옆 간단히 차려진 저녁상">img</div><div class="tx"><span class="line">LINE B · 균형의 식탁</span><h3>장보기는 짧게, 식탁은 길게</h3><p>평일 15분 요리와 주말 한 끼의 균형. 4일의 식탁이 한 박스로 옵니다.</p></div></div>
+    <div class="card"><div class="img wirebox" role="img" aria-label="뚝배기 된장찌개와 장독대가 보이는 따뜻한 한상">img</div><div class="tx"><span class="line">LINE C · 뿌리의 식탁</span><h3>그 맛이 그리울 때</h3><p>재래식 된장, 국간장, 옛 방식 그대로 — 어릴 적 부엌 냄새를 다시 식탁으로.</p></div></div>
+    <div class="card"><div class="img wirebox" role="img" aria-label="시니어 부부가 박스를 열며 웃는 모습과 손글씨 카드">img</div><div class="tx"><span class="line">LINE D · 부모님식탁</span><h3>마음을 박스에 담아 보내기</h3><p>결제는 당신이, 이야깃거리는 부모님이. 동봉 카드에 보내는 분 이름이 들어갑니다.</p></div></div>
+  </div>
+  <div class="dreambar"><span>💬 뭘 골라야 할지 모르겠다면 — <b>드림에게 물어보세요</b></span><span>(준비 중 · 큐레이터 3단계 도입 §3.7)</span></div>
+</section>
+
+<!-- §4 결제 3축 -->
+<section>
+  <div class="anno"><span class="tag">§4 결제주체 3축</span>HTML 배너. alt: 세 갈래로 나뉘는 화살표 배너 — 1인 식탁, 부모님 박스, 사무실 단체 박스</div>
+  <div class="pay3">
+    <div><b>내가 먹는다</b><span>오늘 저녁이 급한 당신에게</span></div>
+    <div><b>부모님께 보낸다</b><span>전화보다 자주 가는 안부</span></div>
+    <div><b>회사가 산다</b><span>직원 명절 선물부터 구내식당까지 → B2B 문의</span></div>
+  </div>
+</section>
+
+<!-- §5 BEST NEW -->
+<section>
+  <div class="anno"><span class="tag">§5 BEST·NEW</span>Cafe24 상품 진열 위젯 ×2 (메인진열 BEST 8 / 신상품 8). 진열 카테고리 = 트리 v1 연동</div>
+  <div class="pad bn">
+    <h2>850일 동안 가장 많이 나간 박스들</h2>
+    <div class="sub">"물류센터에서 팔레트째 나가는 건 이유가 있어요." — BEST 1·2 = 제갈량 꾸러미 고정</div>
+    <div class="grid g4" style="margin:0 0 18px;">
+      <div class="card"><div class="prod wirebox">BEST 1 제갈량 꾸러미</div></div><div class="card"><div class="prod wirebox">BEST 2 제갈량 꾸러미</div></div><div class="card"><div class="prod wirebox">BEST 3</div></div><div class="card"><div class="prod wirebox">BEST 4</div></div>
+    </div>
+    <h2>창고에 새로 들어온 것들</h2>
+    <div class="sub">질러 육포 신규 라인, 티아시아 월남쌈… 들어오자마자 저희가 먼저 먹어봤습니다.</div>
+    <div class="grid g4" style="margin:0;">
+      <div class="card"><div class="prod wirebox">NEW 질러 직화풍 BBQ</div></div><div class="card"><div class="prod wirebox">NEW 월남쌈 200g</div></div><div class="card"><div class="prod wirebox">NEW 돼지고기장조림 ×16</div></div><div class="card"><div class="prod wirebox">NEW</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- §6 메가 허브 -->
+<section>
+  <div class="anno"><span class="tag">§6 메가 콘텐츠 허브</span>HTML 타일 5 — 메가 정본 페이지 (N차 0~4)로 연결. 콘텐츠 = 영업 자료 겸용</div>
+  <div class="grid g5 mega">
+    <div class="card"><div class="img wirebox" style="height:70px;" role="img" aria-label="세계 지도 위 도시 핀 일러스트">img</div><div class="tx"><h3>도시 35</h3><p>소스로 떠나는 세계여행</p></div></div>
+    <div class="card"><div class="img wirebox" style="height:70px;" role="img" aria-label="세 갈래 결제 화살표 아이콘">img</div><div class="tx"><h3>결제주체</h3><p>누구의 식탁을 차리시나요</p></div></div>
+    <div class="card"><div class="img wirebox" style="height:70px;" role="img" aria-label="저당 라벨이 붙은 소스 병">img</div><div class="tx"><h3>저당 헬스</h3><p>맛은 두고 당만 뺐다</p></div></div>
+    <div class="card"><div class="img wirebox" style="height:70px;" role="img" aria-label="절기 달력과 팥죽 한 그릇">img</div><div class="tx"><h3>시즌</h3><p>절기 음식 달력</p></div></div>
+    <div class="card"><div class="img wirebox" style="height:70px;" role="img" aria-label="기내식 트레이 위 한식 죽">img</div><div class="tx"><h3>수출·기내식</h3><p>하늘 위의 한식</p></div></div>
+  </div>
+</section>
+
+<!-- §7 소스사전 픽 -->
+<section id="dict">
+  <div class="anno"><span class="tag">§7 소스사전 픽</span>직답 카드 3 (로테이션 풀 10+ 예정). AEO 핵심 — FAQPage 스키마 부착 후보</div>
+  <div class="pad" style="padding-bottom:0;"><h2>"이 소스 어떻게 써요?"</h2></div>
+  <div class="grid g3">
+    <div class="dict"><span class="q">Q. 국간장이랑 양조간장, 뭐가 달라요?</span><span class="a">→ 국·찌개엔 국간장(색 연하고 짠맛 강함), 볶음·양념장엔 양조간장입니다. 하나만 산다면 양조간장부터.</span><br><span class="go">이 소스 보러가기 →</span></div>
+    <div class="dict"><span class="q">Q. 마라탕 소스, 집에서 식당 맛 나요?</span><span class="a">→ 차오차이 마라탕소스는 끓는 물에 풀면 그게 식당 육수입니다. 재료만 담그면 끝, 15분.</span><br><span class="go">이 소스 보러가기 →</span></div>
+    <div class="dict"><span class="q">Q. 부모님 죽 선물, 어떤 걸로 보내요?</span><span class="a">→ 밸런스죽 7종 박스면 단백질·보양·전통·헬스가 한 번에 갑니다. 1팩 1인분이라 데우기만 하면 돼요.</span><br><span class="go">이 소스 보러가기 →</span></div>
+  </div>
+</section>
+
+<!-- §8 스토리 -->
+<section id="story" class="story">
+  <div class="anno"><span class="tag">§8 스토리 카드 3</span>다크 섹션 — 서사 풀버전은 스토리카드 v1 (패키지 동봉 카드와 동일 서사). ZAFERA = Coming Soon 티저 + 입고 알림 수집 폼</div>
+  <div class="grid g3" style="padding:20px 0;">
+    <div class="card"><div class="tx"><h3>박스를 옮기던 사람들이 만든 회사</h3><p>850일째 매일 소스를 만지고 있는 노동자들이 직접 차린 협동조합입니다.</p></div></div>
+    <div class="card soon"><div class="tx"><h3>ZAFERA — 모로코에서 오고 있습니다</h3><p>사프란이라는 향신료의 시간. 입고 알림을 남겨두세요. [입고 알림 신청]</p></div></div>
+    <div class="card"><div class="tx"><h3>손이 닿는 일을, 손이 가진 자들의 회사로</h3><p>우리가 일하는 방식이 곧 우리가 파는 물건의 품질입니다.</p></div></div>
+  </div>
+</section>
+
+<!-- §9 푸터 -->
+<footer>
+  <div class="anno"><span class="tag">§9 푸터</span>Cafe24 푸터 위젯 + B2B 한 줄</div>
+  <div class="pad">
+    <div class="b2bline">식당·요양원·호텔·항공사까지 — 양식·중화·아시안·시니어웰니스·안주 5갈래 B2B 카탈로그가 준비돼 있습니다. <a href="#">→ B2B 문의</a></div>
+    <div>소스랩 협동조합 · 사업자 정보 · 이용약관 · 개인정보처리방침 (Cafe24 기본 푸터)</div>
+  </div>
+</footer>
+
+</div>
+<div style="max-width:1080px;margin:0 auto 40px;font-size:11px;color:#8a7f72;padding:0 4px;">
+와이어프레임 v2 (2026-06-05) · 데스크톱+모바일 반응형 (760px 분기) · 확정 카피 v1 탑재 · 다음: 그래프 V4 클러스터 검증 → Hero 이미지 제작 → Cafe24 위젯 매핑
+</div>
+</body>
+</html>
